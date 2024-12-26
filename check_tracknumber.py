@@ -161,7 +161,7 @@ def country_info(iso):
 
 def is_num(text):
     for t in text:
-        if t.isdigit() == False:
+        if int(t) < int('0') or int(t) > int('9'):
             return False
     return True
 
@@ -198,7 +198,7 @@ def check_checksum_ru(tracknum):
     sum1 *= 3
     for i in range(1,13,2):
         sum2 += int(tracknum[i])-int('0')
-    calc_control = 10-(sum1+sum2)%10
+    calc_control = (10-(sum1+sum2)%10)%10
     if control == calc_control:
         return True
     else:
@@ -221,7 +221,7 @@ def main():
             print("Неправильный трек номер (контрольная сумма не совпадает)")
     elif len(tracknum) == 13 and is_num(tracknum) == True:
         print('Внутренний трек-номер')
-    elif len(tracknum) == 14:
+    elif len(tracknum) == 14 and is_num(tracknum) == True:
         print('Индекс отправителя:', tracknum[:6])
         if(check_checksum_ru(tracknum) == True):
             print("Трек номер корректный")
